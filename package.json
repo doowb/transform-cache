@@ -18,6 +18,7 @@
     "type": "MIT",
     "url": "https://github.com/doowb/transform-cache/blob/master/LICENSE-MIT"
   },
+  "files": ["index.js"],
   "main": "index.js",
   "engines": {
     "node": ">=0.10.0"
@@ -29,5 +30,9 @@
     "mocha": "*",
     "should": "*"
   },
-  "keywords": []
+  "keywords": [],
+  "dependencies": {
+    "get-value": "^1.0.0",
+    "set-object": "^0.1.0"
+  }
 }
