@@ -71,8 +71,10 @@ describe('transform-cache', function () {
 
   describe('with custom transform', function () {
     it('should add a transformed value to the cache', function () {
-      var cache = new Cache(function (value) {
-        return value.toUpperCase();
+      var cache = new Cache({
+        transform: function (value) {
+          return value.toUpperCase();
+        }
       });
 
       cache.set('foo', 'bar');
@@ -82,16 +84,47 @@ describe('transform-cache', function () {
 
   describe('with custom normalizeKey and transform', function () {
     it('should add a transformed value to the cache', function () {
-      var cache = new Cache(function (key) {
-        return key.toUpperCase();
-      },function (value) {
-        return value.toUpperCase();
+      var cache = new Cache({
+        normalizeKey: function (key) {
+          return key.toUpperCase();
+        },
+        transform: function (value) {
+          return value.toUpperCase();
+        }
       });
 
       cache.set('foo', 'bar');
       assert(cache.get('foo') === 'BAR', 'foo should equal BAR');
       assert(cache.get('FOO') === 'BAR', 'FOO should equal BAR');
       assert(cache.get('FOO') === cache.get('foo'), 'FOO should equal foo');
+    });
+  });
+
+  describe('with custom object and custom options', function () {
+    it('should add a transformed value to the custom object', function () {
+      var obj = { foo: 'bar' };
+      var cache = new Cache(obj, {
+        transform: function (value) {
+          return value.toUpperCase();
+        }
+      });
+      cache.set('beep', 'boop');
+      assert(cache.get('foo') === 'bar', 'foo should equal bar');
+      assert(cache.get('beep') === 'BOOP', 'beep should equal BOOP');
+    });
+
+    it('should normalize a key on the custom object', function () {
+      var obj = { foo: 'bar' };
+      var cache = new Cache(obj, {
+        normalizeKey: function (key) {
+          return key.toUpperCase();
+        }
+      });
+      cache.set('beep', 'boop');
+      assert(cache.get('foo') == null, 'FOO should equal null');
+      assert(cache.cache.foo === 'bar', 'foo should equal bar');
+      assert(obj.BEEP === 'boop', 'obj.BEEP should equal boop');
+      assert(cache.get('beep') === 'boop', 'beep should equal boop');
     });
   });
 });

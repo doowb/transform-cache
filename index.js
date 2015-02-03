@@ -21,32 +21,25 @@ var set = require('set-object');
  * var cache = new Cache(makeKey, tranform);
  * ```
  *
- * @param {Function} `cache` Optional object to store the cache on.
- * @param {Function} `normalizeKey` Optional function used to normalize the key.
- * @param {Function} `transform` Optional function used to transform the value.
+ * @param {Object} `cache` Object to store the cache on.
+ * @param {Object} `options`
+ *     @option {Function} `normalizeKey` normalize the `key` when getting and setting
+ *     @option {Function} `transform` transform the `value` when setting
  * @api public
  */
 
-function Cache (cache, normalizeKey, transform) {
-  if (typeof cache !== 'object') {
-    transform = normalizeKey;
-    normalizeKey = cache;
-    cache = {};
+function Cache (cache, options) {
+  if (arguments.length === 1) {
+    if (cache.hasOwnProperty('normalizeKey') || cache.hasOwnProperty('transform')) {
+      options = cache;
+      cache = {};
+    }
   }
-
-  if (typeof transform !== 'function') {
-    transform = normalizeKey;
-    normalizeKey = function (key) { return key; };
-  }
-
-  if (typeof transform !== 'function') {
-    transform = function (value) { return value; };
-  }
-
-  this.cache = cache;
-  this.normalizeKey = normalizeKey;
-  this.transform = transform;
-};
+  options = options || {};
+  this.cache = cache || {};
+  this.normalizeKey = options.normalizeKey || function (key) { return key; };
+  this.transform = options.transform || function (value) { return value; };
+}
 
 /**
  * Set a value on the cache. The value will be passed through the transform function before setting.
