@@ -70,7 +70,7 @@ Cache.prototype.set = function(key, value) {
  *
  * ```js
  * var bar = cache.get('foo');
- * \\=> BAR
+ * //=> BAR
  * ```
  *
  * @param  {String} `key` Key used to lookup the value.

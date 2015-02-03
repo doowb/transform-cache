@@ -58,7 +58,7 @@ Get a value from the cache.
 
 ```js
 var bar = cache.get('foo');
-\\=> BAR
+//=> BAR
 ```
 
 
