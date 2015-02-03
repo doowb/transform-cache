@@ -18,10 +18,48 @@ npm test
 ## Usage
 
 ```js
-var transformCache = require('transform-cache');
+var Cache = require('transform-cache');
 ```
 
 ## API
+### [Cache](index.js#L30)
+
+Create a cache that transforms values when setting.
+
+* `cache` **{Function}**: Optional object to store the cache on.    
+* `normalizeKey` **{Function}**: Optional function used to normalize the key.    
+* `transform` **{Function}**: Optional function used to transform the value.    
+
+```js
+function makeKey = function (key) { return key.toUpperCase(); };
+function transform = function (value) { return value.toUpperCase(); };
+
+var cache = new Cache(makeKey, tranform);
+```
+
+### [.set](index.js#L64)
+
+Set a value on the cache. The value will be passed through the transform function before setting.
+
+* `key` **{String}**: Key used to set the value on the cache.    
+* `value` **{Mixed}**: Value that gets set on the cache after being transformed.    
+
+```js
+cache.set('foo', 'bar');
+//=> { 'FOO': 'BAR' }
+```
+
+### [.get](index.js#L81)
+
+Get a value from the cache.
+
+* `key` **{String}**: Key used to lookup the value.    
+* `returns` **{Mixed}**: Value returned by the key.  
+
+```js
+var bar = cache.get('foo');
+\\=> BAR
+```
 
 
 ## Contributing
