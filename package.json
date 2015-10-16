@@ -36,5 +36,12 @@
   "dependencies": {
     "get-value": "^1.0.0",
     "set-object": "^0.1.0"
-  }
+  },
+  "contributors": [
+    {
+      "name": "Brian Woodward",
+      "email": "brian.woodward@gmail.com",
+      "url": "https://github.com/doowb"
+    }
+  ]
 }
